@@ -1,0 +1,123 @@
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme " th:fragment="slidebar">
+    <div class="app-brand demo">
+        <a href="/room/lists" class="app-brand-link">
+            <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
+        </a>
+
+        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+            <i class="bx bx-chevron-left bx-sm align-middle"></i>
+        </a>
+    </div>
+
+    <div class="menu-inner-shadow"></div>
+
+    <ul class="menu-inner py-1">
+        <!-- Dashboard -->
+        <li class="menu-item active">
+            <a href="/room/lists" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">Trang chủ</div>
+            </a>
+        </li>
+        <!-- Tables -->
+        <li class="menu-item">
+            <a href="/policy" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-table"></i>
+                <div data-i18n="Tables">Thông tin & Chính sách</div>
+            </a>
+        </li>
+
+        <!-- Layouts -->
+
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                <div data-i18n="Account Settings">Quản lý tài khoản</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="/user/profile" class="menu-link">
+                        <div data-i18n="Account">Thông tin tài khoản</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="/user/changepass" class="menu-link">
+                        <div data-i18n="Notifications">Đổi mật khẩu</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="/logout" class="menu-link">
+                        <div data-i18n="Connections">Đăng xuất</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="menu-item">
+            <a class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-cube-alt"></i>
+                <div data-i18n="Misc">Quản lý phòng</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="/room/list_empty" class="menu-link">
+                        <div data-i18n="Error">Danh sách phòng trống</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="/room/list_rented" class="menu-link">
+                        <div data-i18n="Under Maintenance">Danh sách phòng đang thuê</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="/room/list_rented" class="menu-link">
+                        <div data-i18n="Under Maintenance">Quản lý</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!-- Components -->
+        <!-- Cards -->
+        <li class="menu-item">
+            <a href="/history" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Lịch sử & Thống kê</div>
+            </a>
+        </li>
+        <!-- User interface -->
+        <li class="menu-item">
+            <a href="javascript:void(0)" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-box"></i>
+                <div data-i18n="User interface">Quản lý User</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="ui-alerts.html" class="menu-link">
+                        <div data-i18n="Alerts">Alerts</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="ui-buttons.html" class="menu-link">
+                        <div data-i18n="Buttons">Buttons</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="ui-carousel.html" class="menu-link">
+                        <div data-i18n="Carousel">Carousel</div>
+                    </a>
+                </li>
+
+                <li class="menu-item">
+                    <a href="ui-modals.html" class="menu-link">
+                        <div data-i18n="Modals">Modals</div>
+                    </a>
+                </li>
+
+                <li class="menu-item">
+                    <a href="ui-pagination-breadcrumbs.html" class="menu-link">
+                        <div data-i18n="Pagination &amp; Breadcrumbs">Pagination &amp; Breadcrumbs</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</aside>

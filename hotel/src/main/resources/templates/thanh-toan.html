@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        class="light-style layout-menu-fixed"
+        dir="ltr"
+        data-theme="theme-default"
+        data-assets-path="../assets/"
+        data-template="vertical-menu-template-free">
+<head th:insert="fragments/head.html :: head">
+
+<body>
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar layout-without-menu">
+    <div class="layout-container">
+        <!-- Layout container -->
+        <div class="layout-page">
+            <div class="content-wrapper">
+
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <!-- Custom file input -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="col-xl-12">
+                                <h2 class="card-header" style="text-align: center;">Trang thanh toán</h2>
+                                <br>
+                                <hr>
+                                <div class="mb-3 row">
+                                    <label for="txtMaTraPhong" class="col-md-2 col-form-label">Mã
+                                        phòng</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" id="txtMaTraPhong" readonly=""
+                                               th:value="${ma_phong}">
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="txtTraId" class="col-md-2 col-form-label">Mã khách
+                                        hàng</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" type="text" id="txtTraId"
+                                               th:value="${transaction.getCustomerIdentification()}" readonly>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="txtTraHoTen" class="col-md-2 col-form-label">Họ tên</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" type="text" id="txtTraHoTen"
+                                               th:value="${transaction.getCustomerName()}" readonly>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="txtTraSDT" class="col-md-2 col-form-label">Số điện
+                                        thoại</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" type="text" id="txtTraSDT"
+                                               th:value="${transaction.getCustomerPhone()}" readonly>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="dtNgayThue" class="col-md-2 col-form-label">Ngày thuê</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" type="datetime-local" id="dtNgayThue"
+                                               th:value="${transaction.getCheckIn()}" readonly>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="dtNgayTra" class="col-md-2 col-form-label">Ngày trả</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" type="datetime-local" id="dtNgayTra"
+                                               th:value="${current_time}">
+                                    </div>
+                                </div>
+                                <input class="form-control" type="hidden" id="price_per_day"
+                                       th:value="${price_per_day.getPricePerDay()}">
+                                <hr>
+                                <div class="mb-3 row">
+                                    <label class="col-md-2 col-form-label">Thanh toán: </label>
+                                    <div class="col-md-10">
+                                        <input type="text" readonly id="txtSoTien" style="color: red;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Đóng
+                            </button>
+                            <button type="button" id="btn-thanhtoan" class="btn btn-primary">Xác nhận</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+    </div>
+</div>
+<!-- / Layout wrapper -->
+<script rel="javascript" type="text/javascript" href="js/jquery-1.11.3.min.js">
+
+    var getTimeTra = document.getElementById("dtNgayTra").value;
+    var getTimeNhan = document.getElementById("dtNgayThue").value;
+    var timeNhan = new Date(getTimeNhan).getTime();
+    var timeTra = new Date(getTimeTra).getTime();
+    var time = (timeTra - timeNhan) / 86400000;
+    var price_per_day = document.getElementById("price_per_day").value * time;
+    if (time > 1) {
+        price_per_day = 500000 * parseInt(time);
+    }
+    console.log(time * 24);
+    if (time < 1) {
+        if (time * 24 * 50000 > 500000) {
+            price_per_day = 500000;
+        } else if (time * 24 * 50000 < 50000) {
+            price_per_day = 50000;
+        } else {
+            price_per_day = 50000 * time * 24;
+        }
+    }
+
+    document.getElementById("txtSoTien").value = parseInt(price_per_day);
+
+    $('#btn-thanhtoan').click(function (e) {
+        e.preventDefault();
+        var data = {};
+        data["maPhong"] = $("#txtMaTraPhong").val();
+        data["maKhachHang"] = $("#txtTraId").val();
+        data["hoTen"] = $("#txtTraHoTen").val();
+        data["soDienThoai"] = $("#txtTraSDT").val();
+        data["ngayThue"] = $("#dtNgayThue").val();
+        data["ngayTra"] = $("#dtNgayTra").val();
+        data["price"] = $("#txtSoTien").val();
+        $.ajax({
+            url: "http://localhost:8080/api/transaction/update",
+            type: "POST",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (res) {
+                window.location.assign('http://localhost:8080/room/lists');
+                window.alert("Thanh toán thành công");
+            },
+            error: function (res) {
+                window.alert("Fail");
+            }
+        });
+    });
+</script>
+
+
+<!-- Core JS -->
+<!-- build:js assets/vendor/js/core.js -->
+<script src="../assets/vendor/libs/jquery/jquery.js"></script>
+<script src="../assets/vendor/libs/popper/popper.js"></script>
+<script src="../assets/vendor/js/bootstrap.js"></script>
+<script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+<script src="../assets/vendor/js/menu.js"></script>
+<!-- endbuild -->
+
+<!-- Vendors JS -->
+
+<!-- Main JS -->
+<script src="../assets/js/main.js"></script>
+
+<!-- Page JS -->
+
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+</html>

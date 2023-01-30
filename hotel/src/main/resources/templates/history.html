@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../assets/"
+      data-template="vertical-menu-template-free" xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/html">
+<head th:insert="fragments/head.html :: head">
+</head>
+
+<body>
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+        <!-- Menu -->
+        <aside th:insert="fragments/slidebar.html :: slidebar">
+        </aside>
+        <!-- Layout container -->
+        <div class="layout-page">
+            <!-- Navbar -->
+            <nav th:insert="fragments/navbar.html :: navbar">
+            </nav>
+            <!-- / Navbar -->
+
+            <!-- Content wrapper -->
+            <div class="content-wrapper">
+                <!-- Content -->
+
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <h4 class="fw-bold py-3 mb-4">Lịch sử thuê phòng
+                    </h4>
+                    <!-- Basic Bootstrap Table -->
+                    <div class="card">
+                        <div class="table-responsive text-nowrap">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Mã khách hàng</th>
+                                    <th>Tên khách hàng</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Ngày thuê</th>
+                                    <th>Ngày trả</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thanh toán</th>
+                                </tr>
+                                </thead>
+                                <tbody class="table-border-bottom-0">
+                                <br>
+                                <div class="template-demo col-sm-5">
+                                    <div class="btn-group" role="group" style="display: inline-block">
+                                        <a class="btn btn-outline-secondary"
+                                           th:if="${currentPage > 1}"
+                                           th:href="@{'/history?page='+ ${currentPage - 1}}">&laquo;
+                                        </a>
+                                        <th:block th:each="i: ${#numbers.sequence(1,notifyPage.getTotalPages())}">
+                                            <a th:class="${i} == ${currentPage} ? 'btn btn-outline-secondary active' : 'btn btn-outline-secondary'"
+                                               th:text="${i}" th:href="@{'/history?page='+${i}}">
+                                            </a>
+                                        </th:block>
+                                        <a class="btn btn-outline-secondary"
+                                           th:if="${currentPage < notifyPage.getTotalPages()}"
+                                           th:href="@{'/history?page='+ ${currentPage + 1}}">&raquo;
+                                        </a>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div th:each="item : ${historys}">
+                                    <tr>
+                                        <td style="font-weight: bold" th:text="${item.getMaKhachHang()}"></td>
+                                        <td th:text="${item.getHoTen()}"></td>
+                                        <td><span th:text="${item.getSoDienThoai()}"></span></td>
+                                        <td th:text="${item.getNgayThue()}"></td>
+                                        <td><span th:text="${item.getNgayTra()}"></span></td>
+                                        <div th:if="${item.getTrangThai()}">
+                                            <td class="badge bg-label-success me-1">Đã trả phòng
+                                            </td>
+                                        </div>
+                                        <div th:unless="${item.getTrangThai()}">
+                                            <td class="badge bg-label-warning me-1">Đang thuê
+                                            </td>
+                                        </div>
+
+                                        <td style="color: red" th:text="${item.getPrice()} + ' VNĐ'"></td>
+                                    </tr>
+                                </div>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <hr>
+                    <h4 class="fw-bold py-3 mb-4">Thống kê
+                    </h4>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+
+                                <div class="card-body demo-vertical-spacing demo-only-element">
+
+                                    <div class="input-group">
+                                        <label class="col-sm-1">Tổng số khách: </label>
+                                        <input class="form-control" id="txtTongSoKhach" readonly=""
+                                               th:value="${totalUser}">
+                                        <span class="input-group-text">Lượt</span>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <label class="col-sm-1">Doanh số: </label>
+                                        <input type="text" class="form-control"
+                                               readonly th:value="${totalPrice}">
+                                        <span class="input-group-text">VNĐ</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/ Basic Bootstrap Table -->
+
+
+                </div>
+                <!-- / Content -->
+
+                <!-- Footer -->
+                <div th:insert="fragments/footer.html :: footer">
+                </div>
+                <!-- / Footer -->
+
+                <div class="content-backdrop fade"></div>
+            </div>
+            <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+    </div>
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="../assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="../assets/vendor/libs/popper/popper.js"></script>
+    <script src="../assets/vendor/js/bootstrap.js"></script>
+    <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+    <script src="../assets/vendor/js/menu.js"></script>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+
+    <!-- Main JS -->
+    <script src="../assets/js/main.js"></script>
+
+    <!-- Page JS -->
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+</div>
+</body>
+</html>
